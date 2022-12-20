@@ -6,15 +6,15 @@ const initialUsersState = {
   usersHistory: [],
 };
 
-const createUser = createAction("CREATE_USER");
+export const createUser = createAction("CREATE_USER");
 
-const deleteUser = createAction("DELETE_USER");
+export const deleteUser = createAction("DELETE_USER");
 
-const editUser = createAction("EDIT_USER");
+export const editUser = createAction("EDIT_USER");
 
-const setUser = createAction("SET_USER");
+export const setUser = createAction("SET_USER");
 
-const createUsersList = createAction("CREATE_USERS_LIST");
+export const createUsersList = createAction("CREATE_USERS_LIST");
 
 const usersReducer = createReducer(initialUsersState, {
   [createUser]: (state, action) => {
@@ -38,3 +38,5 @@ const usersReducer = createReducer(initialUsersState, {
     state.usersHistory = [...state.usersHistory, action.payload];
   },
 });
+
+export default usersReducer;

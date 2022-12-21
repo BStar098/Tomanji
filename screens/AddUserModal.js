@@ -107,11 +107,19 @@ function AddUserModal({ modalVisible, setModalVisible, description, title }) {
                 titleSize={18}
                 style={styles.modalButton}
                 onPress={() => {
-                  if (!modalInputValue && !eventModalInputValue) {
-                    Alert.alert("Error", "El campo no puede estar vacío!");
+                  if (!modalInputValue && !eventModalInputValue.name) {
+                    Alert.alert(
+                      "Error",
+                      "El campo no puede estar vacío!"
+                    );
                   } else {
                     if (!description) {
                       dispatch(createUser(modalInputValue));
+                    } else if (!eventModalInputValue.name) {
+                      Alert.alert(
+                        "Error",
+                        "El campo no puede estar vacío!"
+                      );
                     } else {
                       Alert.alert(
                         "Crear Evento",

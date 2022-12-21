@@ -48,6 +48,7 @@ function Home({ navigation }) {
                 }}
               >
                 <ListItem
+                  avatarName={user}
                   title={`${index + 1}. ` + user}
                   titleSize={18}
                   background="white"

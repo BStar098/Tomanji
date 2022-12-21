@@ -1,5 +1,8 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Image } from "react-native";
+import SvgCss from "react-native-svg";
+import { AvatarGenerator, Avatar } from "random-avatar-generator";
+import { SvgUri } from "react-native-svg";
 
 function ListItem({
   style,
@@ -11,7 +14,9 @@ function ListItem({
   titleSize,
   background,
   pressable,
+  avatarName,
 }) {
+  const generator = new AvatarGenerator();
   return (
     <View
       style={[
@@ -23,7 +28,18 @@ function ListItem({
         },
       ]}
     >
-      <View>
+      <View
+        style={avatarName ? { flexDirection: "row", alignItems: "center" } : ""}
+      >
+        {avatarName ? (
+          <SvgUri
+            width={50}
+            height={50}
+            uri={generator.generateRandomAvatar(avatarName)}
+          />
+        ) : (
+          <></>
+        )}
         <Text style={{ ...titleStyle, color: titleColor, fontSize: titleSize }}>
           {title}
         </Text>

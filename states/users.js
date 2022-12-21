@@ -1,4 +1,5 @@
 import { createReducer, createAction } from "@reduxjs/toolkit";
+import { Alert } from "react-native";
 
 const initialUsersState = {
   currentUser: {},
@@ -36,6 +37,7 @@ const usersReducer = createReducer(initialUsersState, {
   },
   [createUsersList]: (state, action) => {
     state.usersHistory = [...state.usersHistory, action.payload];
+    Alert.alert("Crear Evento", "Evento creado con éxito!");
   },
   [clearUserList]: (state, action) => {
     state.userList = [];

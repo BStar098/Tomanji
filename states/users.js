@@ -16,14 +16,14 @@ export const setUser = createAction("SET_USER");
 
 export const createUsersList = createAction("CREATE_USERS_LIST");
 
+export const clearUserList = createAction("CLEAR_USER_LIST");
+
 const usersReducer = createReducer(initialUsersState, {
   [createUser]: (state, action) => {
     state.userList = [...state.userList, action.payload];
   },
   [deleteUser]: (state, action) => {
-    state.userList = state.userList.filter(
-      (el) => el.name !== action.payload.name
-    );
+    state.userList = state.userList.filter((el) => el !== action.payload);
   },
   [editUser]: (state, action) => {
     state.userList = state.userList.filter(
@@ -36,6 +36,9 @@ const usersReducer = createReducer(initialUsersState, {
   },
   [createUsersList]: (state, action) => {
     state.usersHistory = [...state.usersHistory, action.payload];
+  },
+  [clearUserList]: (state, action) => {
+    state.userList = [];
   },
 });
 

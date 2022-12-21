@@ -1,62 +1,62 @@
 import React from "react";
-import {View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 function HexagonsBackground() {
   return (
-      <View style={styles.hexagonsContainer}>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
-        <View style={styles.hexagon}></View>
+    <View style={styles.hexagonsContainer}>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
+      <View style={styles.hexagon}></View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   hexagonsContainer: {
-    height:'200%',
-    width:'150%',
+    height: "200%",
+    width: "150%",
     position: "absolute",
-    flexDirection:'row',
-    flexWrap:'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "space-around",
   },
   hexagon: {
-    borderRadius: 5,
-    height: '10%',
-    width: '25%',
-    backgroundColor: "rgba(218, 241, 244, 0.5)",
-    transform: [{ rotate: "40deg" }],
-    marginHorizontal:'4%',
-    marginBottom:'10%'
+    borderRadius: 100,
+    height: "7%",
+    width: "20%",
+    backgroundColor: "rgba(218, 241, 244, 0.1)",
+    transform: [{ rotate: "45deg" }],
+    marginHorizontal: "1%",
+    marginBottom: "5%",
   },
 });
 

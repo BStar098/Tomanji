@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Provider } from "react-redux";
 import { store } from "./states/store";
 import Home from "./screens/Home";
-import Test from "./screens/Test";
+import AddUserModal from "./screens/AddUserModal";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -19,7 +19,7 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Tomanji" component={Home} />
-          <Stack.Screen name="Test" component={Test} />
+          <Stack.Screen name="AddUserModal" component={AddUserModal} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

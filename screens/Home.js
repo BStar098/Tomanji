@@ -1,22 +1,72 @@
-import React from "react";
-import { Pressable, Text, View, StyleSheet } from "react-native";
+import { React, useState } from "react";
+import {
+  Pressable,
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  Alert,
+} from "react-native";
 import Button from "../components/Button";
 import { useSelector } from "react-redux";
+import AddUserModal from "./AddUserModal";
+import ListItem from "../components/ListItem";
+import EvilIcons from "@expo/vector-icons/EvilIcons";
+import { useDispatch } from "react-redux";
+import { createUsersList, deleteUser } from "../states/users";
 
 function Home({ navigation }) {
+  const dispatch = useDispatch();
   const userList = useSelector((state) => state.users.userList);
+  const [userListModalVisible, setUserListModalVisible] = useState(false);
+  const [eventModalVisible, setEventModalVisible] = useState(false);
   return (
     <View style={styles.landingContainer}>
       <View style={styles.landingTitleContainer}>
         <Text style={styles.landingTitle}>Jugadores</Text>
       </View>
       <View style={styles.playersContainer}>
+        <View style={{ height: "60%", width: "100%" }}>
+          <ScrollView>
+            {userList.map((user, index) => (
+              <View
+                key={index}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <ListItem
+                  title={`${index + 1}. ` + user}
+                  titleSize={18}
+                  background="white"
+                />
+                <Pressable
+                  onPress={() => {
+                    dispatch(deleteUser(user));
+                  }}
+                >
+                  <EvilIcons
+                    name="trash"
+                    size={25}
+                    color="red"
+                    userName={user}
+                  />
+                </Pressable>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
         <Button
           title="+ Agregar jugador"
-          titleStyle={{ fontWeight: "700" }}
+          titleStyle={{ fontWeight: "700", marginTop: "5%" }}
           titleSize={18}
           titleColor={"#38B3E0"}
-        ></Button>
+          onPress={() => {
+            setUserListModalVisible(!userListModalVisible);
+          }}
+        />
         <Button
           style={styles.playersHistoryButton}
           title="Historial Jugadores"
@@ -31,6 +81,20 @@ function Home({ navigation }) {
         title={"CONFIRMAR"}
         titleColor={"white"}
         titleSize={20}
+        onPress={() => {
+          setEventModalVisible(!eventModalVisible);
+        }}
+      />
+      <AddUserModal
+        title="Agrega jugadores"
+        modalVisible={userListModalVisible}
+        setModalVisible={setUserListModalVisible}
+      />
+      <AddUserModal
+        title="Nombre del Evento"
+        description="Guarda la lista para el futuro"
+        modalVisible={eventModalVisible}
+        setModalVisible={setEventModalVisible}
       />
     </View>
   );
@@ -65,7 +129,7 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 10,
     alignItems: "center",
-    justifyContent: "center",
+    padding: "2%",
   },
   playersHistoryButton: {
     position: "absolute",

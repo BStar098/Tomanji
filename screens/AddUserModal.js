@@ -17,6 +17,7 @@ import {
   createUsersList,
   deleteUser,
 } from "../states/users";
+import returnActualDate from "../utils";
 
 function AddUserModal({ modalVisible, setModalVisible, description, title }) {
   const dispatch = useDispatch();
@@ -24,15 +25,20 @@ function AddUserModal({ modalVisible, setModalVisible, description, title }) {
   const [modalInputValue, setModalInputValue] = useState("");
   const [eventModalInputValue, setEventModalInputValue] = useState({
     name: "",
-    players: users,
-    date: "",
+    players: "",
+    date: returnActualDate(),
     picture: "",
   });
+
   const modalInputHandler = (e) => {
     if (!description) {
       setModalInputValue(e);
     } else {
-      setEventModalInputValue({ ...eventModalInputValue, name: e });
+      setEventModalInputValue({
+        ...eventModalInputValue,
+        name: e,
+        players: users,
+      });
     }
   };
 
@@ -101,29 +107,30 @@ function AddUserModal({ modalVisible, setModalVisible, description, title }) {
                 titleSize={18}
                 style={styles.modalButton}
                 onPress={() => {
-                  Alert.alert(
-                    !description ? "Agregar usuario" : `Crear Evento`,
-                    !description
-                      ? `Está seguro de que quiere agregar al usuario "${modalInputValue}" `
-                      : `Crear evento "${eventModalInputValue.name}"?`,
-                    [
-                      {
-                        text: "Si!",
-                        onPress: () => {
-                          if (!description) {
-                            dispatch(createUser(modalInputValue));
-                          } else {
-                            dispatch(createUsersList(eventModalInputValue));
-                            dispatch(clearUserList());
-                            setModalVisible(!modalVisible);
-                          }
-                          setModalInputValue("");
-                        },
-                        cancelable: true,
-                      },
-                      { text: "Cancelar" },
-                    ]
-                  );
+                  if (!modalInputValue && !eventModalInputValue) {
+                    Alert.alert("Error", "El campo no puede estar vacío!");
+                  } else {
+                    if (!description) {
+                      dispatch(createUser(modalInputValue));
+                    } else {
+                      Alert.alert(
+                        "Crear Evento",
+                        `Está seguro de que quiere crear el evento "${eventModalInputValue.name}"?`,
+                        [
+                          {
+                            text: "De acuerdo",
+                            onPress: () => {
+                              dispatch(createUsersList(eventModalInputValue));
+                              setModalVisible(!modalVisible);
+                              dispatch(clearUserList());
+                            },
+                          },
+                          { text: "Cancelar" },
+                        ]
+                      );
+                    }
+                    setModalInputValue("");
+                  }
                 }}
               />
             </View>

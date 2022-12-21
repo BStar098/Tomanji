@@ -1,13 +1,16 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import HexagonsBackground from "../components/HexagonsBackground";
 import MainTitle from "../components/MainTitle";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ListItem from "../components/ListItem";
 import Button from "../components/Button";
+import { setUserList } from "../states/users";
 
-function PlayersHistory() {
+function PlayersHistory({ navigation }) {
+  const dispatch = useDispatch();
   const playersHistories = useSelector((state) => state.users.usersHistory);
+  const currentUserList = useSelector((state) => state.users.currentUserList);
   return (
     <View style={styles.historyRootContainer}>
       <HexagonsBackground />
@@ -16,20 +19,17 @@ function PlayersHistory() {
         title="HISTORIAL"
         backgroundColor="#A86E34"
       />
-      <View style={styles.playersHistoryContainer}>
+
+      <ScrollView style={styles.playersHistoryContainer}>
         {playersHistories.map((history, index) => (
           <ListItem
             key={index}
-            style={{
-              borderBottomWidth: 1,
-              borderBottomColor: "white",
-              paddingVertical: "4%",
-            }}
+            style={styles.playerListItemStyle}
             titleStyle={{ fontWeight: "700", lineHeight: 21 }}
             title={history.name.toUpperCase()}
             titleColor="#FFFFFF"
             titleSize={16}
-            secondaryTitle="fecha"
+            secondaryTitle={history.date}
             pressable={
               <Button
                 title="Ver"
@@ -37,11 +37,15 @@ function PlayersHistory() {
                 titleColor="#38B3E0"
                 backgroundColor={"#FFFFFF"}
                 style={{ padding: "5%", borderRadius: 5 }}
+                onPress={() => {
+                  dispatch(setUserList(history.name));
+                  navigation.navigate("UserList");
+                }}
               />
             }
           />
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -58,6 +62,11 @@ const styles = StyleSheet.create({
     width: "100%",
     top: "10%",
     paddingHorizontal: "10%",
+  },
+  playerListItemStyle: {
+    borderBottomWidth: 1,
+    borderBottomColor: "white",
+    paddingVertical: "4%",
   },
 });
 

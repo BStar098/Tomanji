@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { store } from "./states/store";
 import Home from "./screens/Home";
 import PlayersHistory from "./screens/PlayersHistory";
+import UserList from "./screens/UserLIst";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ export default function App() {
         >
           <Stack.Screen name="Tomanji" component={Home} />
           <Stack.Screen name="PlayersHistory" component={PlayersHistory} />
+          <Stack.Screen name="UserList" component={UserList} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

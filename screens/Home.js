@@ -14,6 +14,7 @@ import ListItem from "../components/ListItem";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { useDispatch } from "react-redux";
 import { createUsersList, deleteUser } from "../states/users";
+import MainTitle from "../components/MainTitle";
 
 function Home({ navigation }) {
   const dispatch = useDispatch();
@@ -22,9 +23,7 @@ function Home({ navigation }) {
   const [eventModalVisible, setEventModalVisible] = useState(false);
   return (
     <View style={styles.landingContainer}>
-      <View style={styles.landingTitleContainer}>
-        <Text style={styles.landingTitle}>Jugadores</Text>
-      </View>
+      <MainTitle title="Jugadores" backgroundColor="#A86E34"/>
       <View style={styles.playersContainer}>
         <View style={{ height: "60%", width: "100%" }}>
           <ScrollView>
@@ -74,6 +73,9 @@ function Home({ navigation }) {
           backgroundColor="#FD7D39"
           titleSize={18}
           titleStyle={{ fontWeight: "700" }}
+          onPress={() => {
+            navigation.navigate("PlayersHistory");
+          }}
         ></Button>
       </View>
       <Button

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Button from "../components/Button";
 import { useSelector } from "react-redux";
-import AddUserModal from "./AddUserModal";
+import AddUserModal from "../components/AddUserModal";
 import ListItem from "../components/ListItem";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { useDispatch } from "react-redux";
@@ -19,6 +19,7 @@ import {
   deleteUser,
   editUserList,
   setEditableTrue,
+  setUser,
 } from "../states/users";
 import MainTitle from "../components/MainTitle";
 import HexagonsBackground from "../components/HexagonsBackground";
@@ -31,6 +32,7 @@ function Home({ navigation }) {
 
   const [userListModalVisible, setUserListModalVisible] = useState(false);
   const [eventModalVisible, setEventModalVisible] = useState(false);
+  const [userNameModalVisible, setUserNameModalVisible] = useState(false);
   return (
     <View style={styles.landingContainer}>
       <HexagonsBackground />
@@ -47,12 +49,22 @@ function Home({ navigation }) {
                   justifyContent: "space-between",
                 }}
               >
-                <ListItem
-                  avatarName={user}
-                  title={`${index + 1}. ` + user}
-                  titleSize={18}
-                  background="white"
-                />
+                <Pressable
+                  onPress={() => {
+                    setUserNameModalVisible(!userNameModalVisible);
+                    dispatch(setUser(user));
+                  }}
+                >
+                  <ListItem
+                    avatarName={user}
+                    title={`${index + 1}. ` + user}
+                    titleSize={18}
+                    background="white"
+                    modalVisible={userNameModalVisible}
+                    setModalVisible={setUserNameModalVisible}
+                  />
+                </Pressable>
+
                 <Pressable
                   onPress={() => {
                     dispatch(deleteUser(user));
@@ -122,6 +134,13 @@ function Home({ navigation }) {
         description="Guarda la lista para el futuro"
         modalVisible={eventModalVisible}
         setModalVisible={setEventModalVisible}
+      />
+      <AddUserModal
+        title="Editar usuario"
+        description="Edite su nombre de Usuario"
+        modalVisible={userNameModalVisible}
+        setModalVisible={setUserNameModalVisible}
+        editUserName={true}
       />
     </View>
   );

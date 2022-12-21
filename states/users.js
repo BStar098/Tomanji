@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 
 const initialUsersState = {
   editable: false,
-  currentUser: {},
+  currentUser: "",
   currentUserList: [],
   userList: [],
   usersHistory: [],
@@ -12,6 +12,8 @@ const initialUsersState = {
 export const createUser = createAction("CREATE_USER");
 
 export const deleteUser = createAction("DELETE_USER");
+
+export const setUser = createAction("SET_USER");
 
 export const editUser = createAction("EDIT_USER");
 
@@ -34,18 +36,18 @@ const usersReducer = createReducer(initialUsersState, {
   [deleteUser]: (state, action) => {
     state.userList = state.userList.filter((el) => el !== action.payload);
   },
+  [setUser]: (state, action) => {
+    state.currentUser = action.payload;
+  },
   [editUser]: (state, action) => {
-    state.userList = state.userList.filter(
-      (el) => el.name !== action.payload.name
+    const indexToReplace = state.userList.findIndex(
+      (user) => user === state.currentUser
     );
-    state.userList = [...state.userList, action.payload];
+    state.userList[indexToReplace] = action.payload
   },
   [createUsersList]: (state, action) => {
- 
-      state.usersHistory = [...state.usersHistory, action.payload];
-      Alert.alert("Crear Evento", "Evento creado con éxito!");
- 
-     
+    state.usersHistory = [...state.usersHistory, action.payload];
+    Alert.alert("Crear Evento", "Evento creado con éxito!");
   },
   [setCurrentUserList]: (state, action) => {
     state.userList = action.payload;

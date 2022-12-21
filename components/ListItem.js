@@ -1,8 +1,9 @@
 import React from "react";
-import { View, StyleSheet, Text, Image } from "react-native";
+import { View, StyleSheet, Text, Image, Pressable } from "react-native";
 import SvgCss from "react-native-svg";
 import { AvatarGenerator, Avatar } from "random-avatar-generator";
 import { SvgUri } from "react-native-svg";
+import { useState } from "react";
 
 function ListItem({
   style,
@@ -17,6 +18,7 @@ function ListItem({
   avatarName,
 }) {
   const generator = new AvatarGenerator();
+  const [avatar, setAvatar] = useState(avatarName);
   return (
     <View
       style={[
@@ -32,17 +34,25 @@ function ListItem({
         style={avatarName ? { flexDirection: "row", alignItems: "center" } : ""}
       >
         {avatarName ? (
-          <SvgUri
-            width={50}
-            height={50}
-            uri={generator.generateRandomAvatar(avatarName)}
-          />
+          <Pressable
+            onPress={() => {
+              setAvatar(generator.generateRandomAvatar());
+            }}
+          >
+            <SvgUri
+              width={50}
+              height={50}
+              uri={generator.generateRandomAvatar(avatar)}
+            />
+          </Pressable>
         ) : (
           <></>
         )}
+
         <Text style={{ ...titleStyle, color: titleColor, fontSize: titleSize }}>
           {title}
         </Text>
+
         {secondaryTitle ? (
           <Text style={[styles.secondaryTitleStyle, secondaryTitleStyle]}>
             {secondaryTitle}

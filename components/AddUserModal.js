@@ -9,20 +9,28 @@ import {
   Alert,
 } from "react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
-import Button from "../components/Button";
+import Button from "./Button";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearUserList,
   createUser,
   createUsersList,
   deleteUser,
+  editUser,
 } from "../states/users";
 import returnActualDate from "../utils";
 
-function AddUserModal({ modalVisible, setModalVisible, description, title }) {
+function AddUserModal({
+  modalVisible,
+  setModalVisible,
+  description,
+  title,
+  editUserName,
+}) {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.userList);
   const [modalInputValue, setModalInputValue] = useState("");
+  const [userNameInputValue, setUserNameInputValue] = useState("");
   const [eventModalInputValue, setEventModalInputValue] = useState({
     name: "",
     players: "",
@@ -31,8 +39,10 @@ function AddUserModal({ modalVisible, setModalVisible, description, title }) {
   });
 
   const modalInputHandler = (e) => {
-    if (!description) {
+    if (!description && !editUserName) {
       setModalInputValue(e);
+    } else if (editUserName) {
+      setUserNameInputValue(e);
     } else {
       setEventModalInputValue({
         ...eventModalInputValue,
@@ -61,7 +71,7 @@ function AddUserModal({ modalVisible, setModalVisible, description, title }) {
             />
             <Text style={styles.modalContentTitle}>{title}</Text>
             <View style={styles.modalUsersContainer}>
-              {!description ? (
+              {!description && !editUserName ? (
                 users.map((user, index) => (
                   <View key={index} style={styles.modalUserName}>
                     <Button
@@ -98,7 +108,13 @@ function AddUserModal({ modalVisible, setModalVisible, description, title }) {
                 textAlign="center"
                 placeholder="Escribir nombre"
                 onChangeText={modalInputHandler}
-                value={!description ? modalInputValue : eventModalInputValue}
+                value={
+                  !description && !editUserName
+                    ? modalInputValue
+                    : editUserName
+                    ? userNameInputValue
+                    : eventModalInputValue
+                }
               />
               <Button
                 title="Confirmar"
@@ -107,20 +123,16 @@ function AddUserModal({ modalVisible, setModalVisible, description, title }) {
                 titleSize={18}
                 style={styles.modalButton}
                 onPress={() => {
-                  if (!modalInputValue && !eventModalInputValue.name) {
-                    Alert.alert(
-                      "Error",
-                      "El campo no puede estar vacío!"
-                    );
+                  if (
+                    !modalInputValue &&
+                    !eventModalInputValue.name &&
+                    !userNameInputValue
+                  ) {
+                    Alert.alert("Error", "El campo no puede estar vacío!");
                   } else {
-                    if (!description) {
+                    if (!description && !editUserName) {
                       dispatch(createUser(modalInputValue));
-                    } else if (!eventModalInputValue.name) {
-                      Alert.alert(
-                        "Error",
-                        "El campo no puede estar vacío!"
-                      );
-                    } else {
+                    } else if (description && !editUserName) {
                       Alert.alert(
                         "Crear Evento",
                         `Está seguro de que quiere crear el evento "${eventModalInputValue.name}"?`,
@@ -136,6 +148,10 @@ function AddUserModal({ modalVisible, setModalVisible, description, title }) {
                           { text: "Cancelar" },
                         ]
                       );
+                    } else {
+                      dispatch(editUser(userNameInputValue));
+                      setUserNameInputValue("");
+                      setModalVisible(!modalVisible);
                     }
                     setModalInputValue("");
                   }

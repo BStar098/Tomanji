@@ -9,17 +9,19 @@ const initialUsersState = {
   usersHistory: [],
 };
 
-export const createUser = createAction("CREATE_USER");
+//Al no haber implementado una api rest, tuve que crear acciones extras para que todo funcione correctamente, así que si algúna acción no está comentada es porque en la aplicación con api rest, tal acción no sería necesaria. También cabe destacar que si bien todas estás accione son sincrónicas, si hubiese implementado una api rest, debería haber usado createAsyncThunk para los pedidos asincrónicos.
 
-export const deleteUser = createAction("DELETE_USER");
+export const createUser = createAction("CREATE_USER"); //POST, se crea un usuario con id único
+
+export const deleteUser = createAction("DELETE_USER"); //DELETE, se elimina un usuario a partir de su id
 
 export const setUser = createAction("SET_USER");
 
-export const editUser = createAction("EDIT_USER");
+export const editUser = createAction("EDIT_USER"); //PUT, se edita un usuario a partir de su id
 
-export const createUsersList = createAction("CREATE_USERS_LIST");
+export const createUsersList = createAction("CREATE_USERS_LIST"); //POST, se crea un evento y se lo vincula con aquellos usuarios que aun no tengan un eventoId
 
-export const setCurrentUserList = createAction("SET_CURRENT_USER_LIST");
+export const setCurrentUserList = createAction("SET_CURRENT_USER_LIST"); //GET, se trae a todos los usuarios que tengan cierto eventoId
 
 export const setEditableTrue = createAction("SET_EDITABLE_TRUE");
 
@@ -43,7 +45,7 @@ const usersReducer = createReducer(initialUsersState, {
     const indexToReplace = state.userList.findIndex(
       (user) => user === state.currentUser
     );
-    state.userList[indexToReplace] = action.payload
+    state.userList[indexToReplace] = action.payload;
   },
   [createUsersList]: (state, action) => {
     state.usersHistory = [...state.usersHistory, action.payload];

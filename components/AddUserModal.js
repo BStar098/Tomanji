@@ -7,6 +7,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Alert,
+  ScrollView,
 } from "react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import Button from "./Button";
@@ -70,7 +71,7 @@ function AddUserModal({
               }}
             />
             <Text style={styles.modalContentTitle}>{title}</Text>
-            <View style={styles.modalUsersContainer}>
+            <ScrollView style={styles.modalUsersContainer}>
               {!description && !editUserName ? (
                 users.map((user, index) => (
                   <View key={index} style={styles.modalUserName}>
@@ -101,7 +102,7 @@ function AddUserModal({
               ) : (
                 <Text style={styles.descriptionText}>{description}</Text>
               )}
-            </View>
+            </ScrollView>
             <View style={styles.inputContainer}>
               <TextInput
                 style={{ fontSize: 18, marginBottom: 10 }}
@@ -143,6 +144,7 @@ function AddUserModal({
                               dispatch(createUsersList(eventModalInputValue));
                               setModalVisible(!modalVisible);
                               dispatch(clearUserList());
+                              setEventModalInputValue("");
                             },
                           },
                           { text: "Cancelar" },
@@ -193,8 +195,7 @@ const styles = StyleSheet.create({
     color: "#3F454E",
   },
   modalUsersContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    marginVertical: "5%",
   },
   descriptionText: { color: "#979797", fontSize: 16, fontWeight: "400" },
   modalUserName: {
